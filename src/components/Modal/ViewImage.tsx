@@ -7,6 +7,7 @@ import {
   Image,
   Link,
 } from '@chakra-ui/react';
+import { SyntheticEvent, useState } from 'react';
 
 interface ModalViewImageProps {
   isOpen: boolean;
@@ -19,24 +20,40 @@ export function ModalViewImage({
   onClose,
   imgUrl,
 }: ModalViewImageProps): JSX.Element {
-  // TODO MODAL WITH IMAGE AND EXTERNAL LINK
+  const [isWide, setIsWide] = useState(false);
+
+  const handleImageLoad = (
+    event: SyntheticEvent<HTMLImageElement, Event>
+  ): void => {
+    const { width, height } = event.currentTarget;
+    if (width > 900 && width >= height) setIsWide(true);
+    else setIsWide(false);
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent>
-        <ModalBody>
+      <ModalContent
+        w="fit-content"
+        h="fit-content"
+        maxW="fit-content"
+        maxH="fit-content"
+        bgColor="pGray.900"
+        p="0"
+      >
+        <ModalBody w="100%" p="0">
           <Image
+            maxW={isWide ? '900px' : 'unset'}
+            maxH={isWide ? 'unset' : '600px'}
+            onLoad={handleImageLoad}
             src={imgUrl}
-            w="fit-content"
-            h="fit-content"
             objectFit="cover"
-            maxW="900px"
-            maxH="600px"
           />
         </ModalBody>
-        <ModalFooter>
-          <Link href={imgUrl}>Abrir original</Link>
+        <ModalFooter justifyContent="flex-start">
+          <Link href={imgUrl} target="_blank">
+            Abrir original
+          </Link>
         </ModalFooter>
       </ModalContent>
     </Modal>
