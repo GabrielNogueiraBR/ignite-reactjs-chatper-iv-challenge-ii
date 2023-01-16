@@ -7,7 +7,7 @@ import {
   Image,
   Link,
 } from '@chakra-ui/react';
-import { SyntheticEvent, useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface ModalViewImageProps {
   isOpen: boolean;
@@ -22,10 +22,10 @@ export function ModalViewImage({
 }: ModalViewImageProps): JSX.Element {
   const [isWide, setIsWide] = useState(false);
 
-  const handleImageLoad = (
-    event: SyntheticEvent<HTMLImageElement, Event>
-  ): void => {
-    const { width, height } = event.currentTarget;
+  const imageRef = useRef(null);
+
+  const handleImageLoad = (): void => {
+    const { width, height } = imageRef.current;
     if (width > 900 && width >= height) setIsWide(true);
     else setIsWide(false);
   };
@@ -43,6 +43,7 @@ export function ModalViewImage({
       >
         <ModalBody w="100%" p="0">
           <Image
+            ref={imageRef}
             maxW={isWide ? '900px' : 'unset'}
             maxH={isWide ? 'unset' : '600px'}
             onLoad={handleImageLoad}
