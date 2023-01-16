@@ -25,6 +25,7 @@ export default function Home(): JSX.Element {
 
   const formattedData = useMemo(() => {
     if (!data) return [null];
+    if (!data.pages) return (data as any).data.flat();
     return data.pages.map(page => page.data.data).flat();
   }, [data]);
 
