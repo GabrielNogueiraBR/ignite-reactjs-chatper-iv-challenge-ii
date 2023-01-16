@@ -30,7 +30,7 @@ export function CardList({ cards }: CardsProps): JSX.Element {
 
   return (
     <>
-      <Grid gap={10} templateColumns="repeat(3, 1fr)">
+      <Grid gap={10} mb="40px" templateColumns="repeat(3, 1fr)">
         {cards.map(card => (
           <Card data={card} viewImage={handleViewImage} />
         ))}
