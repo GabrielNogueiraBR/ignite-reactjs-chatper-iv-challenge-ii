@@ -8,7 +8,7 @@ export type PostImageData = {
 };
 
 const postImages = async (data: PostImageData): Promise<AxiosResponse> => {
-  return api.post('/images', data);
+  return api.post('/api/images', data);
 };
 
 export default postImages;

@@ -7,7 +7,7 @@ interface fetchImagesProps {
 const fetchImages = async ({
   pageParam = null,
 }: fetchImagesProps): Promise<any> => {
-  const data = api.get('/images', { params: { after: pageParam } });
+  const data = api.get('/api/images', { params: { after: pageParam } });
 
   return data;
 };
